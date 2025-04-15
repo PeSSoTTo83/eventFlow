@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${entidad.idEntidad} != null ? 'Editar Entidad Organizadora' : 'Nueva Entidad Organizadora'">Formulario</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+  <h2 class="text-center" th:text="${entidad.idEntidad} != null ? 'Editar Entidad Organizadora' : 'Registrar Entidad Organizadora'"></h2>
+
+  <form th:action="@{/entidades/guardar}" th:object="${entidad}" method="post">
+    <input type="hidden" th:field="*{idEntidad}" />
+
+    <div class="form-group"><label>Nombre</label><input type="text" th:field="*{nombre}" class="form-control" required /></div>
+    <div class="form-group"><label>CIF</label><input type="text" th:field="*{cif}" class="form-control" /></div>
+    <div class="form-group"><label>Dirección</label><input type="text" th:field="*{direccion}" class="form-control" /></div>
+    <div class="form-group"><label>Código Postal</label><input type="text" th:field="*{codigoPostal}" class="form-control" /></div>
+    <div class="form-group"><label>País</label><input type="text" th:field="*{pais}" class="form-control" /></div>
+
+    <div class="text-center mt-4">
+      <button type="submit" class="btn btn-success">Guardar</button>
+      <a th:href="@{/entidades}" class="btn btn-secondary ml-2">Cancelar</a>
+    </div>
+  </form>
+</div>
+</body>
+</html>

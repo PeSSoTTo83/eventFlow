@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${club.idClub} != null ? 'Editar Club' : 'Nuevo Club'">Formulario Club</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+  <h2 class="text-center mb-4" th:text="${club.idClub} != null ? 'Editar Club' : 'Registrar Club'"></h2>
+
+  <form th:action="@{/clubes/guardar}" th:object="${club}" method="post">
+  <input type="hidden" th:field="*{idClub}" />
+
+  <div class="form-group"><label>Nombre</label><input type="text" th:field="*{nombre}" class="form-control" required/></div>
+  <div class="form-group"><label>CIF</label><input type="text" th:field="*{cif}" class="form-control"/></div>
+  <div class="form-group"><label>Dirección</label><input type="text" th:field="*{direccion}" class="form-control"/></div>
+  <div class="form-group"><label>Código Postal</label><input type="text" th:field="*{codigoPostal}" class="form-control"/></div>
+  <div class="form-group"><label>Teléfono</label><input type="text" th:field="*{telefono}" class="form-control"/></div>
+  <div class="form-group"><label>Correo</label><input type="email" th:field="*{correo}" class="form-control"/></div>
+
+  <div class="form-group">
+    <label>Federación</label>
+    <select class="form-control" name="federacionId" required>
+      <option th:each="fed : ${federaciones}"
+              th:value="${fed.idFederacion}"
+              th:selected="${club.federacion != null and club.federacion.idFederacion == fed.idFederacion}"
+              th:text="${fed.nombre}">
+      </option>
+    </select>
+  </div>
+
+  <div class="text-center mt-3">
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <a th:href="@{/clubes}" class="btn btn-secondary ml-2">Cancelar</a>
+  </div>
+</form>
+
+</div>
+</body>
+</html>

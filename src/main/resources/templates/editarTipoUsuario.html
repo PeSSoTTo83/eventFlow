@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Tipo de Usuario</title>
+    <link rel="stylesheet" th:href="@{/css/tipousuario.css}" />
+</head>
+<body>
+
+    <h1>Editar Tipo de Usuario</h1>
+
+    <form th:action="@{/tipousuario/update/{id}(id=${tipoUsuario.idtipousuario})}" method="post" th:object="${tipoUsuario}">
+        <!-- Campo oculto para el ID -->
+        <input type="hidden" th:field="*{idtipousuario}" />
+
+        <label for="tipo">Tipo:</label>
+        <input type="text" id="tipo" th:field="*{tipo}" required />
+
+        <label for="description">Descripción:</label>
+        <input type="text" id="description" th:field="*{description}" />
+
+        <label for="activo">Activo:</label>
+        <select id="activo" th:field="*{activo}" required>
+            <option value="1">Sí</option>
+            <option value="0">No</option>
+        </select>
+
+        <div class="actions">
+            <button type="submit">Guardar Cambios</button>
+            <a th:href="@{/tipousuario}" class="btn">Volver</a>
+        </div>
+    </form>
+
+</body>
+</html>

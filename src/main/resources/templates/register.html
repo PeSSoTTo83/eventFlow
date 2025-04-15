@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Usuario</title>
+    <link rel="stylesheet" th:href="@{/css/register.css}" />
+</head>
+<body>
+    <div class="register-wrapper">
+        <div class="register-container">
+            <h1>Crear Cuenta</h1>
+            <form th:action="@{/usuario/saveUser}" th:object="${usuario}" method="post" class="form-container">
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" th:field="*{nombre}" class="input-field" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" id="apellido" th:field="*{apellido}" class="input-field" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" th:field="*{email}" class="input-field" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="contrasenya">Contraseña:</label>
+                    <input type="password" id="contrasenya" th:field="*{contrasenya}" class="input-field" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="activo">Activo:</label>
+                    <select id="activo" th:field="*{activo}" class="input-field" required>
+                        <option value="1" selected>Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn">Registrarse</button>
+				<button type="button" class="btn-back" onclick="window.history.back();">Volver</button>
+                
+            </form>
+        </div>
+    </div>
+</body>
+</html>

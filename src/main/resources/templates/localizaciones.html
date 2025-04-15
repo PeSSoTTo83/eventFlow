@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Localizaciones</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+  <h2 class="text-center">Lista de Localizaciones</h2>
+
+  <table class="table table-bordered mt-3">
+    <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>País</th>
+        <th>Provincia</th>
+        <th>Municipio</th>
+        <th>Código Postal</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="loc : ${localizaciones}">
+        <td th:text="${loc.idLocalizacion}"></td>
+        <td th:text="${loc.pais}"></td>
+        <td th:text="${loc.provincia}"></td>
+        <td th:text="${loc.municipio}"></td>
+        <td th:text="${loc.codigoPostal}"></td>
+        <td>
+          <a th:href="@{/localizaciones/editar/{id}(id=${loc.idLocalizacion})}" class="btn btn-warning btn-sm">Editar</a>
+          <a th:href="@{/localizaciones/eliminar/{id}(id=${loc.idLocalizacion})}" class="btn btn-danger btn-sm"
+             onclick="return confirm('¿Seguro que deseas eliminar esta localización?')">Eliminar</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="text-center mt-3">
+    <a th:href="@{/localizaciones/nueva}" class="btn btn-success">Añadir Localización</a>
+  </div>
+</div>
+</body>
+</html>

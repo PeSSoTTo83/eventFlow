@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Editar Usuario</title>
+    <link rel="stylesheet" th:href="@{/css/usuario.css}" />
+</head>
+<body>
+
+    <h1>Editar Usuario</h1>
+
+    <form th:action="@{/usuario/update/{id}(id=${usuario.idusuario})}" th:object="${usuario}" method="post">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" th:field="*{nombre}" required />
+
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" th:field="*{apellido}" required />
+
+        <label for="fechanacimiento">Fecha Nacimiento:</label>
+        <input type="date" id="fechanacimiento" th:field="*{fechanacimiento}" />
+
+        <label for="dni">DNI:</label>
+        <input type="text" id="dni" th:field="*{dni}" />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" />
+
+        <label for="contrasenya">Nueva Contraseña (dejar en blanco para no cambiar):</label>
+        <input type="password" id="contrasenya" th:field="*{contrasenya}" />
+
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" th:field="*{telefono}" />
+
+        <!-- Select para la FK tipousuario -->
+        <label for="tipousuario">Tipo de Usuario:</label>
+        <select id="tipousuario" th:field="*{tipousuario}" required>
+            <option th:each="tu : ${tipoUsuarios}"
+                    th:value="${tu.idtipousuario}"
+                    th:text="${tu.tipo}"
+                    th:selected="${tu.idtipousuario == usuario.tipousuario}">
+            </option>
+        </select>
+
+        <!-- Campo activo (1=Sí, 0=No) -->
+        <label for="activo">Activo:</label>
+        <select id="activo" th:field="*{activo}" required>
+            <option value="1">Sí</option>
+            <option value="0">No</option>
+        </select>
+
+        <button type="submit">Guardar Cambios</button>
+        <a th:href="@{/usuario}"><button type="button">Volver</button></a>
+    </form>
+
+</body>
+</html>
