@@ -1,68 +1,61 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Gestión de Tipos de Usuario</title>
-    <link rel="stylesheet" th:href="@{/css/tipousuario.css}" />
+  <meta charset="UTF-8" />
+  <title>Gestión de Tipos de Usuario</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 </head>
 <body>
 
-    <h1>Gestión de Tipos de Usuario</h1>
+<div class="container mt-4">
+  <a th:href="@{/index}" class="btn btn-secondary mb-3">Volver</a>
 
-    <h2>Lista de Tipos de Usuario</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tipo</th>
-                <th>Descripción</th>
-                <th>Activo</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="tu : ${tipoUsuarios}">
-                <td th:text="${tu.idtipousuario}"></td>
-                <td th:text="${tu.tipo}"></td>
-                <td th:text="${tu.description}"></td>
-                <td th:text="${tu.activo}"></td>
-                <td class="actions">
-                    <!-- Botón Editar -->
-                    <a th:href="@{/tipousuario/edit/{id}(id=${tu.idtipousuario})}">
-                        <button type="button" class="btn-edit">Editar</button>
-                    </a>
-                    <!-- Botón Eliminar fuera del formulario -->
-                    <a th:href="@{/tipousuario/delete/{id}(id=${tu.idtipousuario})}" class="btn-delete" onclick="return confirm('¿Seguro que deseas eliminar este tipo de usuario?');">
-                        <button type="button">Eliminar</button>
-                    </a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+  <h2 class="text-center">Gestión de Tipos de Usuario</h2>
 
-    <h2>Agregar Nuevo Tipo de Usuario</h2>
-    <form th:action="@{/tipousuario}" method="post">
-        <label for="tipo">Tipo:</label>
-        <input type="text" id="tipo" name="tipo" required />
+  <table class="table table-bordered mt-3">
+    <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Tipo</th>
+        <th>Descripción</th>
+        <th>Activo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="tu : ${tipoUsuarios}">
+        <td th:text="${tu.idtipousuario}"></td>
+        <td th:text="${tu.tipo}"></td>
+        <td th:text="${tu.description}"></td>
+        <td th:text="${tu.activo}"></td>
+        <td>
+          <a th:href="@{/tipousuario/edit/{id}(id=${tu.idtipousuario})}" class="btn btn-warning btn-sm">Editar</a>
 
-        <label for="description">Descripción:</label>
-        <input type="text" id="description" name="description" />
+          <form th:action="@{/tipousuario/delete/{id}(id=${tu.idtipousuario})}" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar este tipo?')">Eliminar</button>
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-        <label for="activo">Activo (1 para Sí, 0 para No):</label>
-        <select id="activo" name="activo" required>
-            <option value="1">1</option>
-            <option value="0">0</option>
-        </select>
-
-        <button type="submit" class="btn-submit">Agregar</button>
-    </form>
-
-    <!-- Botón Volver -->
-    <div class="actions">
-        <a th:href="@{/}">
-            <button type="button" class="btn-back">Volver</button>
-        </a>
+  <h4 class="mt-5">Agregar Nuevo Tipo de Usuario</h4>
+  <form th:action="@{/tipousuario}" method="post" class="mt-3">
+    <div class="form-group"><label>Tipo:</label><input type="text" name="tipo" class="form-control" required /></div>
+    <div class="form-group"><label>Descripción:</label><input type="text" name="description" class="form-control" /></div>
+    <div class="form-group">
+      <label>Activo:</label>
+      <select name="activo" class="form-control" required>
+        <option value="1">Sí</option>
+        <option value="0">No</option>
+      </select>
     </div>
 
+    <div class="text-center">
+      <button type="submit" class="btn btn-success">Agregar Tipo</button>
+    </div>
+  </form>
+
+</div>
 </body>
 </html>

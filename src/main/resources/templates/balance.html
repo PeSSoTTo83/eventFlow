@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Balance del Evento</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+</head>
+<body>
+<div class="container mt-4">
+  <a th:href="@{/balance}" class="btn btn-secondary mb-3">Cambiar Evento</a>
+
+  <h2 class="text-center">Balance del Evento: <span th:text="${evento.nombre}"></span></h2>
+
+  <table class="table table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th>Ingresos</th>
+        <th>Gastos</th>
+        <th>Balance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td th:text="${ingresos} + ' €'"></td>
+        <td th:text="${gastos} + ' €'"></td>
+        <td th:text="${balance} + ' €'"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4 class="mt-5">Gastos Registrados</h4>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Descripción</th>
+        <th>Importe (€)</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="g : ${gastosLista}">
+        <td th:text="${g.descripcion}"></td>
+        <td th:text="${g.importe}"></td>
+        <td>
+          <a th:href="@{/balance/editar/{idGasto}/{idEvento}(idGasto=${g.idGasto}, idEvento=${evento.idEvento})}"
+             class="btn btn-warning btn-sm">Editar</a>
+          <a th:href="@{/balance/eliminar/{idGasto}/{idEvento}(idGasto=${g.idGasto}, idEvento=${evento.idEvento})}"
+             class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar este gasto?')">Eliminar</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- FORMULARIO DE EDICIÓN -->
+  <div th:if="${editando != null}">
+    <h4 class="mt-4">Editar Gasto</h4>
+    <form th:action="@{/balance/update/{id}(id=${evento.idEvento})}" th:object="${editando}" method="post">
+      <input type="hidden" th:field="*{idGasto}" />
+
+      <div class="form-group"><label>Descripción:</label>
+        <input type="text" th:field="*{descripcion}" class="form-control" required />
+      </div>
+      <div class="form-group"><label>Importe (€):</label>
+        <input type="number" step="0.01" th:field="*{importe}" class="form-control" required />
+      </div>
+
+      <button type="submit" class="btn btn-warning mt-2">Actualizar Gasto</button>
+    </form>
+  </div>
+
+  <!-- FORMULARIO DE NUEVO GASTO -->
+  <div th:if="${editando == null}">
+    <h4 class="mt-4">Agregar Gasto</h4>
+    <form th:action="@{/balance/guardar/{id}(id=${evento.idEvento})}" th:object="${nuevoGasto}" method="post">
+      <div class="form-group"><label>Descripción:</label>
+        <input type="text" th:field="*{descripcion}" class="form-control" required />
+      </div>
+      <div class="form-group"><label>Importe (€):</label>
+        <input type="number" step="0.01" th:field="*{importe}" class="form-control" required />
+      </div>
+
+      <button type="submit" class="btn btn-success mt-2">Guardar Gasto</button>
+    </form>
+  </div>
+
+</div>
+</body>
+</html>

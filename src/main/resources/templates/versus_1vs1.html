@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Versus 1vs1</title>
+</head>
+<body>
+<h1>Enfrentamientos 1vs1</h1>
+<h2 th:text="${evento.nombre}"></h2>
+
+<form th:action="@{/clasificaciones/versus-participantes/guardar}" method="post" th:object="${nuevoEnfrentamiento}">
+    <input type="hidden" th:field="*{evento.idEvento}"/>
+    <label>Participante 1:</label>
+    <select th:field="*{participante1.idParticipante}">
+        <option th:each="p : ${participantes}" th:value="${p.idParticipante}" th:text="${p.nombre}"></option>
+    </select>
+
+    <label>Participante 2:</label>
+    <select th:field="*{participante2.idParticipante}">
+        <option th:each="p : ${participantes}" th:value="${p.idParticipante}" th:text="${p.nombre}"></option>
+    </select>
+
+    <label>Resultado:</label>
+    <input type="text" th:field="*{resultado}" />
+
+    <button type="submit">Guardar</button>
+</form>
+
+<table>
+    <tr>
+        <th>Participante 1</th>
+        <th>Participante 2</th>
+        <th>Resultado</th>
+        <th>Acciones</th>
+    </tr>
+    <tr th:each="e : ${enfrentamientos}">
+        <td th:text="${e.participante1.nombre}"></td>
+        <td th:text="${e.participante2.nombre}"></td>
+        <td th:text="${e.resultado}"></td>
+        <td>
+            <a th:href="@{'/clasificaciones/versus-participantes/eliminar/' + ${e.id}}">Eliminar</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Seleccionar Tipo Clasificación</title>
+    <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+</head>
+<body>
+<div class="container mt-5">
+    <a th:href="@{/clasificaciones}" class="btn btn-secondary mb-3"><i class="fas fa-arrow-left"></i> Volver</a>
+
+    <h2 th:text="'Selecciona el tipo de clasificación para: ' + ${evento.nombre}"></h2>
+
+    <form th:action="@{'/clasificaciones/evento/' + ${evento.idEvento} + '/guardar-tipo'}" method="post">
+        <div class="form-group">
+            <label for="tipoId">Tipo de Clasificación</label>
+            <select class="form-control" name="tipoId" id="tipoId" required>
+                <option value="" disabled selected>-- Selecciona tipo --</option>
+                <option th:each="tipo : ${tipos}"
+                        th:value="${tipo.id}"
+                        th:text="${tipo.nombre}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Guardar y continuar</button>
+    </form>
+</div>
+</body>
+</html>

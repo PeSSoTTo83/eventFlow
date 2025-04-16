@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Seleccionar Evento</title>
+    <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+</head>
+<body>
+<div class="container mt-5">
+    <a th:href="@{/index}" class="btn btn-secondary mb-3"><i class="fas fa-arrow-left"></i> Volver</a>
+
+    <h2>Selecciona un evento para gestionar su clasificación</h2>
+
+    <form th:action="@{/clasificaciones/seleccionar-evento}" method="post">
+        <div class="form-group">
+            <select class="form-control" name="eventoId" required>
+                <option value="" disabled selected>-- Selecciona un evento --</option>
+                <option th:each="evento : ${eventos}"
+                        th:value="${evento.idEvento}"
+                        th:text="${evento.nombre}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Acceder</button>
+    </form>
+</div>
+</body>
+</html>

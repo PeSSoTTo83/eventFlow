@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Clasificación General</title>
+    <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+</head>
+<body>
+<div class="container mt-4">
+
+    <a th:href="@{/clasificaciones}" class="btn btn-secondary mb-3">Cambiar Evento</a>
+    <h2>Clasificación General - <span th:text="${evento.nombre}"></span></h2>
+
+    <!-- TABLA CLASIFICADOS -->
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Posición</th>
+            <th>Participante</th>
+            <th>Clasificado</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="c : ${clasificados}">
+            <td th:text="${c.clasificado} ? ${c.posicion} : 'NC'"></td>
+            <td th:text="${c.participante.nombre} + ' ' + ${c.participante.apellidos}"></td>
+            <td th:text="${c.clasificado ? 'Sí' : 'No'}"></td>
+            <td>
+                <a th:href="@{'/clasificaciones/general/' + ${evento.idEvento} + '/editar/' + ${c.id}}" class="btn btn-warning btn-sm">Editar</a>
+                <a th:href="@{'/clasificaciones/general/' + ${evento.idEvento} + '/eliminar/' + ${c.id}}"
+                   onclick="return confirm('¿Estás seguro de eliminar este clasificado?')"
+                   class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- FORMULARIO -->
+    <h4 class="mt-4" th:if="${editando != null}">Editar Clasificado</h4>
+    <h4 class="mt-4" th:if="${editando == null}">Añadir a Clasificación</h4>
+
+    <form th:action="@{${editando != null} ? '/clasificaciones/general/' + ${evento.idEvento} + '/actualizar/' + ${editando.id} : '/clasificaciones/general/' + ${evento.idEvento} + '/guardar'}"
+          method="post">
+
+        <!-- PARTICIPANTE -->
+        <div class="form-group">
+            <label>Participante:</label>
+            <select class="form-control" name="participanteId" th:attr="disabled=${editando != null}">
+                <option disabled selected>-- Selecciona un participante --</option>
+                <option th:each="p : ${disponibles}" th:value="${p.idParticipante}"
+                        th:text="${p.nombre} + ' ' + ${p.apellidos}"
+                        th:selected="${editando != null and editando.participante.idParticipante == p.idParticipante}">
+                </option>
+            </select>
+
+            <!-- Este hidden es necesario si el select está deshabilitado -->
+            <input type="hidden" name="participanteId"
+                   th:if="${editando != null}"
+                   th:value="${editando.participante.idParticipante}" />
+        </div>
+
+        <!-- CLASIFICADO -->
+        <div class="form-group">
+            <label>¿Clasificado?</label>
+            <select name="clasificado" class="form-control">
+                <option value="true" th:selected="${editando != null and editando.clasificado}">Sí</option>
+                <option value="false" th:selected="${editando != null and !editando.clasificado}">No</option>
+            </select>
+        </div>
+
+        <!-- BOTONES -->
+        <button type="submit" class="btn btn-success mt-2" th:text="${editando != null} ? 'Actualizar' : 'Guardar'"></button>
+        <a th:href="@{'/clasificaciones/general/' + ${evento.idEvento}}" class="btn btn-secondary mt-2">Cancelar</a>
+    </form>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${evento.idEvento != null} ? 'Editar Evento' : 'Nuevo Evento'">Formulario Evento</title>
+
+  <!-- Bootstrap + Flatpickr CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body>
+<div class="container mt-4">
+  <h2 class="text-center mb-4" th:text="${evento.idEvento != null} ? 'Editar Evento' : 'Registrar Evento'"></h2>
+
+  <form th:action="@{/eventos/guardar}" th:object="${evento}" method="post">
+    <input type="hidden" th:field="*{idEvento}" />
+
+    <div class="form-group"><label>Nombre</label><input type="text" th:field="*{nombre}" class="form-control" required /></div>
+
+    <!-- Campo visual de fecha y hora de inicio -->
+    <div class="form-group">
+      <label>Fecha y Hora de Inicio</label>
+      <input id="datetime-inicio" type="text" class="form-control" placeholder="Selecciona fecha y hora">
+    </div>
+
+    <!-- Campo visual de fecha y hora de fin -->
+    <div class="form-group">
+      <label>Fecha y Hora de Fin</label>
+      <input id="datetime-fin" type="text" class="form-control" placeholder="Selecciona fecha y hora">
+    </div>
+
+    <!-- Campos reales que se rellenan con JS -->
+    <input type="hidden" id="fechaInicio" th:field="*{fechaInicio}" />
+    <input type="hidden" id="horaInicio" th:field="*{horaInicio}" />
+    <input type="hidden" id="fechaFin" th:field="*{fechaFin}" />
+    <input type="hidden" id="horaFin" th:field="*{horaFin}" />
+
+    <div class="form-group"><label>Precio Inscripción (€)</label><input type="number" step="0.01" th:field="*{precioInscripcion}" class="form-control" /></div>
+
+    <div class="form-group">
+      <label>Entidad Organizadora</label>
+      <select th:field="*{entidadOrganizadora.idEntidad}" class="form-control" required>
+        <option value="" disabled selected>Seleccione una</option>
+        <option th:each="e : ${entidades}" th:value="${e.idEntidad}" th:text="${e.nombre}"></option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Localización</label>
+      <select th:field="*{localizacion.idLocalizacion}" class="form-control" required>
+        <option value="" disabled selected>Seleccione una</option>
+        <option th:each="l : ${localizaciones}" th:value="${l.idLocalizacion}" th:text="${l.municipio}"></option>
+      </select>
+    </div>
+
+    <div class="text-center mt-4">
+	  <button type="submit" class="btn btn-success">Guardar Evento</button>
+	  <a th:href="@{/eventos}" class="btn btn-secondary ml-2">Volver</a>
+	</div>
+  </form>
+</div>
+
+<!-- JS necesarios -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script th:src="@{/js/evento-datetime.js}"></script>
+</body>
+</html>

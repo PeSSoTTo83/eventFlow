@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Eventos</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+
+  <a th:href="@{/index}" class="btn btn-secondary mb-3">Volver</a>
+
+  <h2 class="text-center">Lista de Eventos</h2>
+
+  <table class="table table-bordered mt-3">
+    <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Fecha</th>
+        <th>Hora</th>
+        <th>Entidad</th>
+        <th>Localización</th>
+        <th>Participantes</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="evento : ${eventos}">
+        <td th:text="${evento.idEvento}"></td>
+        <td th:text="${evento.nombre}"></td>
+        <td th:text="${evento.fechaInicio} + ' - ' + ${evento.fechaFin}"></td>
+        <td th:text="${evento.horaInicio} + ' - ' + ${evento.horaFin}"></td>
+        <td th:text="${evento.entidadOrganizadora?.nombre}"></td>
+        <td th:text="${evento.localizacion?.municipio}"></td>
+        <td th:text="${evento.numParticipantes}"></td>
+        <td>
+          <a th:href="@{/eventos/editar/{id}(id=${evento.idEvento})}" class="btn btn-warning btn-sm">Editar</a>
+          <a th:href="@{/eventos/eliminar/{id}(id=${evento.idEvento})}" class="btn btn-danger btn-sm"
+             onclick="return confirm('¿Eliminar evento?')">Eliminar</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="text-center mt-3">
+    <a th:href="@{/eventos/nuevo}" class="btn btn-success">Crear Evento</a>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Versus Participantes</title>
+</head>
+<body>
+<h2>Clasificación Versus - [[${evento.nombre}]]</h2>
+<a href="/clasificaciones">Cambiar Evento</a>
+
+<h3>Enfrentamientos</h3>
+<table>
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Participantes</th>
+        <th>Marcador</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="e : ${enfrentamientos}">
+        <td th:text="${e.nombre}"></td>
+        <td>
+            <span th:if="${!e.esDosVsDos}" th:text="${e.participante1.nombre + ' vs ' + e.participante2.nombre}"></span>
+            <span th:if="${e.esDosVsDos}" th:text="${e.participante1.nombre + ' & ' + e.participante2.nombre + ' vs ' + e.participante3.nombre + ' & ' + e.participante4.nombre}"></span>
+        </td>
+        <td th:text="${e.marcador1} + ' - ' + ${e.marcador2}"></td>
+        <td>
+            <a th:href="@{'/clasificaciones/versus-participantes/eliminar/' + ${e.id}}">Eliminar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Nuevo enfrentamiento</h3>
+<form th:action="@{/clasificaciones/versus-participantes/guardar}" th:object="${nuevoEnfrentamiento}" method="post">
+    <input type="hidden" th:field="*{evento.idEvento}" th:value="${evento.idEvento}"/>
+    <label>Nombre del enfrentamiento:</label>
+    <input type="text" th:field="*{nombre}" required/>
+
+    <label>Participante 1:</label>
+    <select th:field="*{participante1}">
+        <option th:each="p : ${participantes}" th:value="${p}" th:text="${p.nombre}"></option>
+    </select>
+
+    <label>Participante 2:</label>
+    <select th:field="*{participante2}">
+        <option th:each="p : ${participantes}" th:value="${p}" th:text="${p.nombre}"></option>
+    </select>
+
+    <label>Marcador 1:</label>
+    <input type="number" th:field="*{marcador1}"/>
+
+    <label>Marcador 2:</label>
+    <input type="number" th:field="*{marcador2}"/>
+
+    <label>¿Es 2 vs 2?</label>
+    <input type="checkbox" th:field="*{esDosVsDos}"/><br/>
+
+    <label>Participante 3:</label>
+    <select th:field="*{participante3}">
+        <option th:each="p : ${participantes}" th:value="${p}" th:text="${p.nombre}"></option>
+    </select>
+
+    <label>Participante 4:</label>
+    <select th:field="*{participante4}">
+        <option th:each="p : ${participantes}" th:value="${p}" th:text="${p.nombre}"></option>
+    </select>
+
+    <button type="submit">Guardar enfrentamiento</button>
+</form>
+
+</body>
+</html>

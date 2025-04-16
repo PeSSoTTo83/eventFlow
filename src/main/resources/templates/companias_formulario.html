@@ -2,43 +2,32 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title th:text="${federacion.idFederacion} != null ? 'Editar Federación' : 'Nueva Federación'">Formulario Federación</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>Formulario Compañía</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 </head>
 <body>
+
 <div class="container mt-4">
-  <h2 th:text="${federacion.idFederacion} != null ? 'Editar Federación' : 'Registrar Federación'" class="text-center mb-4"></h2>
 
-  <form th:action="@{/federaciones/guardar}" th:object="${federacion}" method="post">
-    <input type="hidden" th:field="*{idFederacion}" />
+  <a th:href="@{/companias}" class="btn btn-secondary mb-3">Volver</a>
 
-    <div class="form-group"><label>Nombre</label><input type="text" th:field="*{nombre}" class="form-control" required/></div>
-    <div class="form-group"><label>CIF</label><input type="text" th:field="*{cif}" class="form-control" /></div>
-    <div class="form-group"><label>Dirección</label><input type="text" th:field="*{direccion}" class="form-control" /></div>
-    <div class="form-group"><label>Código Postal</label><input type="text" th:field="*{codigoPostal}" class="form-control" /></div>
-    <div class="form-group"><label>Provincia</label><input type="text" th:field="*{provincia}" class="form-control" /></div>
-    <div class="form-group"><label>País</label><input type="text" th:field="*{pais}" class="form-control" /></div>
-    <div class="form-group"><label>Teléfono</label><input type="text" th:field="*{telefono}" class="form-control" /></div>
-    <div class="form-group"><label>Correo</label><input type="email" th:field="*{correo}" class="form-control" /></div>
+  <h2 class="text-center" th:text="${compania.idAseguradora != null} ? 'Editar Compañía Aseguradora' : 'Añadir Nueva Compañía'"></h2>
 
-    <!-- Campo de relación con compañía aseguradora -->
-    <div class="form-group">
-      <label>Compañía Aseguradora</label>
-      <select th:field="*{companiaAseguradora.idAseguradora}" class="form-control" required>
-        <option value="" disabled selected>Seleccione una</option>
-        <option th:each="compania : ${companias}" 
-                th:value="${compania.idAseguradora}" 
-                th:text="${compania.nombre}"
-                th:selected="${federacion.companiaAseguradora != null and federacion.companiaAseguradora.idAseguradora == compania.idAseguradora}">
-        </option>
-      </select>
-    </div>
+  <form th:action="@{/companias/guardar}" th:object="${compania}" method="post">
+    <input type="hidden" th:field="*{idAseguradora}" />
 
-    <div class="text-center mt-4">
-      <button type="submit" class="btn btn-success">Guardar</button>
-      <a th:href="@{/federaciones}" class="btn btn-secondary ml-2">Cancelar</a>
+    <div class="form-group"><label>Nombre:</label><input type="text" th:field="*{nombre}" class="form-control" required /></div>
+    <div class="form-group"><label>Teléfono:</label><input type="text" th:field="*{telefono}" class="form-control" /></div>
+    <div class="form-group"><label>Correo:</label><input type="email" th:field="*{correo}" class="form-control" /></div>
+    <div class="form-group"><label>Dirección:</label><input type="text" th:field="*{direccion}" class="form-control" /></div>
+    <div class="form-group"><label>Código Postal:</label><input type="text" th:field="*{codigoPostal}" class="form-control" /></div>
+    <div class="form-group"><label>País:</label><input type="text" th:field="*{pais}" class="form-control" /></div>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-warning" th:text="${compania.idAseguradora != null} ? 'Guardar Cambios' : 'Añadir Compañía'"></button>
     </div>
   </form>
+
 </div>
 </body>
 </html>

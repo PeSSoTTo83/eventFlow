@@ -10,6 +10,7 @@
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
+
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <ul class="navbar-nav">
@@ -54,26 +55,68 @@
               <p>Clubes</p>
             </a>
           </li>
-          
+
           <li class="nav-item">
-		  	<a th:href="@{/localizaciones}" class="nav-link">
-			    <i class="nav-icon fas fa-map-marker-alt"></i>
-			    <p>Localizaciones</p>
-			</a>
-		</li>
-		<li class="nav-item">
-		  <a th:href="@{/entidades}" class="nav-link">
-		    <i class="nav-icon fas fa-users-cog"></i>
-		    <p>Entidades Organizadoras</p>
-		  </a>
-		</li>
-	
+            <a th:href="@{/localizaciones}" class="nav-link">
+              <i class="nav-icon fas fa-map-marker-alt"></i>
+              <p>Localizaciones</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a th:href="@{/entidades}" class="nav-link">
+              <i class="nav-icon fas fa-users-cog"></i>
+              <p>Entidades Organizadoras</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a th:href="@{/usuario}" class="nav-link">
+              <i class="nav-icon fas fa-user-edit"></i>
+              <p>Gestión de Usuarios</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a th:href="@{/tipousuario}" class="nav-link">
+              <i class="nav-icon fas fa-id-badge"></i>
+              <p>Tipos de Usuario</p>
+            </a>
+          </li>
+
           <li class="nav-item">
             <a th:href="@{/eventos}" class="nav-link">
               <i class="nav-icon fas fa-calendar-alt"></i>
               <p>Eventos</p>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a th:href="@{/participantes}" class="nav-link">
+              <i class="nav-icon fas fa-user-friends"></i>
+              <p>Participantes</p>
+            </a>
+          </li>
+          <li class="nav-item">
+		  <a th:href="@{/patrocinadores}" class="nav-link">
+		    <i class="nav-icon fas fa-hand-holding-usd"></i>
+		    <p>Patrocinadores</p>
+		  </a>
+		</li>
+		
+		<li class="nav-item">
+		  <a th:href="@{/balance}" class="nav-link">
+		    <i class="nav-icon fas fa-chart-line"></i>
+		    <p>Balance Financiero</p>
+		  </a>
+		</li>
+		<li class="nav-item">
+		  <a th:href="@{/clasificaciones}" class="nav-link">
+		    <i class="nav-icon fas fa-trophy"></i>
+		    <p>Clasificaciones</p>
+		  </a>
+		</li>
+          
 
         </ul>
       </nav>
@@ -87,6 +130,7 @@
       <p>Selecciona un módulo en el menú para comenzar.</p>
     </div>
   </div>
+
 </div>
 </body>
 </html>

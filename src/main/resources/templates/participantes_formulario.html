@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario Participante</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+</head>
+<body>
+
+<div class="container mt-4">
+  <a th:href="@{/participantes}" class="btn btn-secondary mb-3">Volver</a>
+
+  <h2 class="text-center">Formulario Participante</h2>
+
+  <form th:action="@{/participantes/guardar}" th:object="${participante}" method="post">
+    <input type="hidden" th:field="*{idParticipante}" />
+
+    <div class="form-group"><label>Nº Licencia:</label><input type="text" th:field="*{numLicencia}" class="form-control" required /></div>
+    <div class="form-group"><label>Nombre:</label><input type="text" th:field="*{nombre}" class="form-control" required /></div>
+    <div class="form-group"><label>Apellidos:</label><input type="text" th:field="*{apellidos}" class="form-control" required /></div>
+    <div class="form-group"><label>Fecha Nacimiento:</label><input type="date" th:field="*{fechaNacimiento}" class="form-control" /></div>
+    <div class="form-group"><label>Teléfono:</label><input type="text" th:field="*{telefono}" class="form-control" /></div>
+    <div class="form-group"><label>Correo:</label><input type="email" th:field="*{correo}" class="form-control" /></div>
+
+    <div class="form-group">
+      <label>Club:</label>
+      <select th:field="*{club.idClub}" class="form-control" required>
+        <option th:each="c : ${clubes}" th:value="${c.idClub}" th:text="${c.nombre}"></option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Evento:</label>
+      <select name="eventoId" class="form-control" required>
+        <option th:each="e : ${eventos}" th:value="${e.idEvento}" th:text="${e.nombre}"
+                th:selected="${participante.evento != null} ? ${e.idEvento} == ${participante.evento.idEvento} : false"></option>
+      </select>
+    </div>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-success">Guardar Participante</button>
+    </div>
+  </form>
+</div>
+</body>
+</html>
